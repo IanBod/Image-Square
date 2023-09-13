@@ -50,6 +50,13 @@ jobs:
         if: ${{ matrix.perl < '5.14' }}
         run: |
             cpanm --notest ExtUtils::MakeMaker
+      - name: Install libgd on linux
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        run : |
+            apt-get update -y
+            apt-get libgd
+            apt-get libgd-dev
+            apt-get libgd-tools
       - name: Run Makefile.PL and get prereqs
         # but there might be some modules needed by configure, which makes chicken/egg problem
         run: |
