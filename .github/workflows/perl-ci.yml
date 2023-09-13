@@ -27,10 +27,10 @@ jobs:
         #perl:               [ '5.10', '5.32' ]
         #perl:               [ '5.12', '5.32', '5.34' ]
         perl:               [ '5.34' ]
-        include:
-          - perl: '5.32'
-            os: 'ubuntu-latest'
-            coverage: true
+        #include:
+        #  - perl: '5.32'
+        #    os: 'ubuntu-latest'
+        #    coverage: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -56,7 +56,8 @@ jobs:
           # install known dependencies
           cpanm ExtUtils::PkgConfig
           cpanm Carp
-          cpanm GD
+          cpanm --verbose --installdeps GD
+          cpanm --verbose GD
           # intial run of Makefile.PL to see missing dependencies
           perl Makefile.PL
           # ${{ ( startsWith(matrix.os, 'windows') && 'Get-ChildItem -Recurse') || 'ls -latrR' }}
