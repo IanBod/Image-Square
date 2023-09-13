@@ -54,7 +54,6 @@ jobs:
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         run : |
             sudo apt-get update -y
-            sudo apt-get install -y libgd
             sudo apt-get install -y libgd-dev
             sudo apt-get install -y libgd-tools
       - name: Run Makefile.PL and get prereqs
