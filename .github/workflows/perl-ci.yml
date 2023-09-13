@@ -53,10 +53,10 @@ jobs:
       - name: Install libgd on linux
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         run : |
-            apt-get update -y
-            apt-get libgd
-            apt-get libgd-dev
-            apt-get libgd-tools
+            sudo apt-get update -y
+            sudo apt-get install -y libgd
+            sudo apt-get install -y libgd-dev
+            sudo apt-get install -y libgd-tools
       - name: Run Makefile.PL and get prereqs
         # but there might be some modules needed by configure, which makes chicken/egg problem
         run: |
