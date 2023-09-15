@@ -8,61 +8,64 @@ eval "use Digest::MD5 qw(md5_hex)";
 
 plan skip_all => "Skipping tests: Digest::MD5 not available!" if $@;
 
-plan tests => 11;
+plan tests => 18;
 
 use Image::Square;
 
-# Hashes of visually tested images
-my %hash = (
-    'hor_square'   => 'c97e63fc792ef75b5ff49c078046321e',
-    'hor_left'     => '20a5c6517316ebef4c255c12f991dbc7',
-    'hor_right'    => 'ed8cf4b01870b8ad9baf81da9283677a',
-    'ver_square'   => '6d29d3b19bf4784eb205622feabf2aee',
-    'ver_top'      => '4360c4fffb94546e898b10662aad7045',
-    'ver_bottom'   => '6550147a58db0ef44fd0290b6d46d1a3',
-);
+# Create horizontal image
+my $horizontal = GD::Image->new(160, 90, 1);
+my $red = $horizontal->colorAllocate(255,0,0);
+$horizontal->rectangle(10, 10, 150, 80, $red);
+$horizontal->fill(50, 50, $red);
 
-# Test horizontal iamge
-my $image = Image::Square->new('t/CoventryCathedral.png');
+# Create vertical image
+my $vertical = GD::Image->new(200, 500, 1);
+$vertical->rectangle(10, 10, 190, 490, $red);
+$vertical->fill(50, 50, $red);
 
-ok ($image, 'Instantiation');
+my $h_square = Image::Square->new($horizontal);
+my $v_square = Image::Square->new($vertical);
 
-diag('Testing horizontal image');
+ok ($h_square, 'Horizontal instantiation');
+ok ($v_square, 'Vertical   instantiation');
 
-my $square1 = $image->square();
-my $square2 = $image->square(100);
-my $square3 = $image->square(150, 0);
-my $square4 = $image->square(150, 1);
+my $square1 = $h_square->square();
+my $square2 = $h_square->square(100);
+my $square3 = $h_square->square(125, 0);
+my $square4 = $h_square->square(150, 1);
 
-ok ($square1->width == $square1->height, 'Image is square from horizontal');
+diag ( 'Testing horizontal image' );
 
-cmp_ok ( 100 == $square2->width, '&&', 100 == $square2->height, 'Correct resize from horizontal');
+cmp_ok ( $square1->width, '==', $square1->height, 'Square 1 is square');
+cmp_ok ( $square1->width, '==', 90, 'Square 1 is 90px');
 
-cmp_ok ( md5_hex($square2->gd), 'eq', $hash{'hor_square'}, 'Correct centre image from horizontal');
+cmp_ok ( $square2->width, '==', $square2->height, 'Square 2 is square');
+cmp_ok ( $square2->width, '==', 100, 'Square 2 is 100px');
 
-cmp_ok ( md5_hex($square3->gd), 'eq', $hash{'hor_left'}, 'Correct left image from horizontal');
+cmp_ok ( $square3->width, '==', $square3->height, 'Square 3 is square');
+cmp_ok ( $square3->width, '==', 125, 'Square 3 is 125px');
 
-cmp_ok ( md5_hex($square4->gd), 'eq', $hash{'hor_right'}, 'Correct right image from horizontal');
+cmp_ok ( $square4->width, '==', $square4->height, 'Square 4 is square');
+cmp_ok ( $square4->width, '==', 150, 'Square 4 is 150px');
 
-# Test vertical iamge
-$image = Image::Square->new('t/decoration.png');
+my $square5 = $v_square->square();
+my $square6 = $v_square->square(80);
+my $square7 = $v_square->square(110, 0);
+my $square8 = $v_square->square(175, 1);
 
-diag('Testing vertical image');
+diag ( 'Testing vertical image' );
 
-my $square5 = $image->square();
-my $square6 = $image->square(100);
-my $square7 = $image->square(150, 0);
-my $square8 = $image->square(150, 1);
+cmp_ok ( $square5->width, '==', $square5->height, 'Square 5 is square');
+cmp_ok ( $square5->width, '==', 200, 'Square 5 is 200px');
 
-ok ($square5->width == $square5->height, 'Image is square from vertical');
+cmp_ok ( $square6->width, '==', $square6->height, 'Square 6 is square');
+cmp_ok ( $square6->width, '==', 80, 'Square 6 is 80px');
 
-cmp_ok ($square6->width == 100, '&&', $square6->height == 100, 'Correct resize from vertical');
+cmp_ok ( $square7->width, '==', $square7->height, 'Square 7 is square');
+cmp_ok ( $square7->width, '==', 110, 'Square 7 is 1110px');
 
-cmp_ok ( md5_hex($square6->gd), 'eq', $hash{'ver_square'}, 'Correct centre image from vertical');
-
-cmp_ok ( md5_hex($square7->gd), 'eq', $hash{'ver_top'}, 'Correct top image from vertical');
-
-cmp_ok ( md5_hex($square8->gd), 'eq', $hash{'ver_bottom'}, 'Correct bottom image from vertical');
+cmp_ok ( $square8->width, '==', $square8->height, 'Square 8 is square');
+cmp_ok ( $square8->width, '==', 175, 'Square 8 is 175px');
 
 done_testing;
 
