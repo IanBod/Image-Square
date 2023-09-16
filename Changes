@@ -5,6 +5,7 @@ Revision history for Image-Square
 	- Gave up on using hashes to check images as each build of libgd seems to use a different value from copyResampled. 
 	- Instead we now generate the images on the fly meaning no big payloads to download.
 	- The checks are for initial size, upscaling and downscaling.
+	- Makefile.PL contains META_MERGE section
 
 0.01_4  13th September 2023
 	- Tests still fail on different builds of GD.  Now using PNG as input image and native GD format for output.
