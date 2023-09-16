@@ -6,10 +6,10 @@ name: perl-ci
 # Controls when the workflow will run
 on:
   # Triggers the workflow on all pushes to branches, and pull request for the main branch
-#  push:
-#   branches:
-#  pull_request:
-#   branches: [ main ]
+   push:
+    branches:
+   pull_request:
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,9 +23,9 @@ jobs:
       fail-fast: false
       matrix:
         os:                 [ 'windows-latest', 'ubuntu-latest' ]
-        #perl:               [ '5.8.5', '5.8.6', '5.8.7', '5.8.8', '5.8.9', '5.10', '5.10.1', '5.12', '5.14', '5.16', '5.18', '5.20', '5.22', '5.24', '5.26', '5.28', '5.30', '5.32' ]
+        perl:               [ '5.8.5', '5.8.6', '5.8.7', '5.8.8', '5.8.9', '5.10', '5.10.1', '5.12', '5.14', '5.16', '5.18', '5.20', '5.22', '5.24', '5.26', '5.28', '5.30', '5.32' ]
         #perl:               [ '5.12', '5.34' ]
-        perl:               [ '5.38' ]
+        #perl:               [ '5.38' ]
         # include:
         #  - perl: '5.38'
         #    os: 'ubuntu-latest'
